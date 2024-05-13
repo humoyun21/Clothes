@@ -1,8 +1,15 @@
+import { Outlet } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
+const theme = createTheme()
 const App = () => {
   return (
-    <div>
-      <h1>Exam React</h1>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <ToastContainer/>
+        <Outlet/>
+      </ThemeProvider>
+    </>
   );
 };
 
