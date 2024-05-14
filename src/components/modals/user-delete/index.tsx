@@ -55,9 +55,9 @@ export default function BasicModal({ data }: any) {
               {data.id? "Delete User?" : "Delete Category?"}
             </Typography>
             <div className="flex gap-3 mt-16">
-              <Button onClick={handleClose}>No</Button>
+              <Button onClick={handleClose}>Yo'q</Button>
               <Button onClick={deleteUser} variant="contained">
-                Yes
+                Ha
               </Button>
             </div>
           </div>

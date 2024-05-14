@@ -3,11 +3,20 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Field, Form, Formik } from "formik";
-import { TextField } from "@mui/material";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import {
+  FormControlLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+} from "@mui/material";
 import { createProduct } from "../../../interface/products";
-import Radio from "../../ui/gender";
+import FormLabel from "@mui/material/FormLabel";
 import useProductsStore from "../../../store/products";
+import { productValidationSchema } from "@validation";
+import useCategoryStore from "../../../store/category";
 
 const style = {
   position: "absolute" as "absolute",
@@ -25,7 +34,8 @@ const style = {
 
 export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
-  const {createProduct, getData} = useProductsStore()
+  const { createProduct, getData } = useProductsStore();
+  const { getCategory, data } = useCategoryStore();
   const [params] = React.useState({
     page: 1,
     limit: 10,
@@ -47,16 +57,20 @@ export default function BasicModal() {
     for_gender: "",
   };
   const handleSubmit = async (data: any) => {
-    createProduct(data)
-    getData(params)
+    await createProduct(data);
+    await getData(params);
     handleClose();
   };
-
+  const categories = () => {
+    getCategory(params);
+  };
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Add product
-      </Button>
+      <div onClick={() => categories()}>
+        <Button variant="contained" onClick={handleOpen}>
+          Add product
+        </Button>
+      </div>
       <Modal
         open={open}
         onClose={handleClose}
@@ -69,21 +83,33 @@ export default function BasicModal() {
             className="text-center"
             variant="h6"
             component="h2"
+            sx={{ mb: 2 }}
           >
             Add product
           </Typography>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={productValidationSchema}
+          >
             {({ isSubmitting }) => (
               <Form>
-                <div className="grid grid-cols-2 gap-x-5 justify-between items-center">
+                <div className="grid grid-cols-2 gap-y-3 gap-x-5 justify-between items-center">
                   <Field
                     name="product_name"
                     type="text"
                     as={TextField}
                     label="Product name"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="product_name"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="color"
@@ -91,8 +117,15 @@ export default function BasicModal() {
                     as={TextField}
                     label="Color"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="color"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="size"
@@ -100,35 +133,81 @@ export default function BasicModal() {
                     as={TextField}
                     label="Size"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="size"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
-                  <Field
-                    name="made_in"
-                    type="text"
-                    fullWidth
-                    as={TextField}
-                    label="Made in"
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <Field
-                    name="category_id"
-                    type="text"
-                    fullWidth
-                    as={TextField}
-                    label="Category"
-                    margin="normal"
-                    variant="outlined"
-                  />
+                  <div>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Made in
+                    </FormLabel>
+                    <Field
+                      name="made_in"
+                      type="text"
+                      fullWidth
+                      as={Select}
+                      label="Made in"
+                      margin="none"
+                      variant="outlined"
+                    >
+                      <MenuItem value="Uzbekistan">Uzbekistan</MenuItem>
+                      <MenuItem value="Turkey">Turkey</MenuItem>
+                      <MenuItem value="China">China</MenuItem>
+                    </Field>
+                    <ErrorMessage
+                      name="made_in"
+                      component="span"
+                      className="text-[red] text-[15px]"
+                    />
+                  </div>
+                  <div>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Gender
+                    </FormLabel>
+                    <Field
+                      name="category_id"
+                      type="text"
+                      as={Select}
+                      label="Category"
+                      className="relative"
+                      margin="none"
+                      variant="outlined"
+                      fullWidth
+                    >
+                      <MenuItem value="">Select category</MenuItem>
+                      {data?.map((item: any, index: number) => (
+                        <MenuItem key={index} value={item.category_id}>
+                          {item.category_name}
+                        </MenuItem>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="category_id"
+                      component="span"
+                      className="text-[red] text-[15px]"
+                    />
+                  </div>
                   <Field
                     name="cost"
                     type="number"
                     as={TextField}
                     label="Cost"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="cost"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="discount"
@@ -136,8 +215,15 @@ export default function BasicModal() {
                     as={TextField}
                     label="Discount"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="discount"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="count"
@@ -145,8 +231,15 @@ export default function BasicModal() {
                     as={TextField}
                     label="Count"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="count"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="description"
@@ -154,8 +247,15 @@ export default function BasicModal() {
                     as={TextField}
                     label="Description"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="description"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="age_max"
@@ -163,8 +263,15 @@ export default function BasicModal() {
                     as={TextField}
                     label="Age max"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="age_max"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
                   <Field
                     name="age_min"
@@ -172,10 +279,44 @@ export default function BasicModal() {
                     as={TextField}
                     label="Age min"
                     fullWidth
-                    margin="normal"
+                    margin="none"
                     variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="age_min"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
                   />
-                <Field className="mb-10" name="for_gender" type="text" fullWidth as={Radio} />
+                  <Field
+                    as={RadioGroup}
+                    aria-label="for_gender"
+                    name="for_gender"
+                    className="flex items-center mb-3"
+                    margin="none"
+                  >
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Gender
+                    </FormLabel>
+                    <div className="flex items-center justify-between">
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                      />
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio />}
+                        label="Female"
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="for_gender"
+                      component="span"
+                      className="text-[red] text-[15px]"
+                    />
+                  </Field>
                 </div>
                 <Button
                   type="submit"

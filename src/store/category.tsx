@@ -6,7 +6,7 @@ import Notification from "@notification";
 const useCategoryStore = create<CategoryStore>((set) => ({
   data: [],
   isLoading: false,
-  getData: async (params: any) => {
+  getCategory: async (params: any) => {
     try {
       set({ isLoading: true });
       const response = await category.get_category(params);
@@ -17,6 +17,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         set({ data: response?.data?.categories });
       }
       set({ isLoading: false });
+      return response?.data?.categories;
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +45,6 @@ const useCategoryStore = create<CategoryStore>((set) => ({
   updateCategory: async (data: any) => {
     try {
       const response = await category.update_category(data);
-      console.log(response);
       if (response.status === 200) {
         response?.data?.categories?.forEach((item: any, index: number) => {
           item.index = index + 1;

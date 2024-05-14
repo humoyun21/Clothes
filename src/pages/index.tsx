@@ -2,6 +2,7 @@ import Home from './home'
 import SignIn from './signin'
 import SignUp from './signup'
 import Products from './products'
+import Product from './product'
 import Categories from './categories'
 import Users from './users'
-export {Home, SignIn, SignUp, Products, Categories, Users}
+export {Home, SignIn, SignUp, Products, Categories, Users, Product}

@@ -7,7 +7,7 @@ import {
 
 import App from "../App";
 
-import { Home, SignIn, SignUp, Products, Categories, Users } from "../pages";
+import { Home, SignIn, SignUp, Products, Categories, Users, Product } from "../pages";
 
 const index = () => {
   const router = createBrowserRouter(
@@ -15,8 +15,9 @@ const index = () => {
       <Route path="/" element={<App />}>
         <Route index element={<SignIn />} />
         <Route path="/admin-panel/*" element={<Home />}>
-          <Route index element={<Products />} />
-          <Route path="categories" element={<Categories />} />  
+          <Route path="" element={<Products />} />
+          <Route path="singlepage" element={<Product />} />
+          <Route path="categories" element={<Categories />} />
           <Route path="users" element={<Users />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />

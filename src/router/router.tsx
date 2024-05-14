@@ -11,17 +11,17 @@ interface Route{
 
 const routes: Route[] = [
     {
-        path: "",
+        path: "/admin-panel",
         content: "Products",
         icon: <ProductionQuantityLimitsIcon />
     },
     {
-        path: "categories",
+        path: "/admin-panel/categories",
         content: "Categories",
         icon: <CategoryIcon />
     },
     {
-        path: "users",
+        path: "/admin-panel/users",
         content: "Users",
         icon: <PeopleIcon />
     },

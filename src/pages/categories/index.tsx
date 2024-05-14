@@ -4,7 +4,7 @@ import useCategoryStore from "../../store/category";
 import { Button } from "@mui/material";
 import { Category } from "@modals"
 const index = () => {
-  const { getData, data, isLoading } = useCategoryStore();
+  const { getCategory, data, isLoading } = useCategoryStore();
   const [modal, setModal] = useState(false);
   const [item, setItem] = useState({});
   const [params] = useState({
@@ -25,7 +25,7 @@ const index = () => {
   ];
   const action = [{ action: "edit", action2: "delete" }];
   useEffect(() => {
-    getData(params);
+    getCategory(params);
   }, []);
   return (
     <div>

@@ -25,6 +25,7 @@ const useUsersStore = create<UsersStore>((set) => ({
     try {
       const response = await user.create_user(data);
       if (response.status === 201) {
+        set((state) => ({ data: [...state.data, response.data] }));
         Notification({
           title: "User successfully created",
           type: "success",
@@ -52,24 +53,23 @@ const useUsersStore = create<UsersStore>((set) => ({
       console.log(error);
     }
   },
-  // updateData: async (data: any) => {
-  //   try {
-  //     const response = await user.update_user(data)
-  //     console.log(response);
-  //     // if (response.status === 200) {
-  //     //   Notification({
-  //     //     title: "User successfully updated",
-  //     //     type: "success",
-  //     //   });
-  //     // }
-  //   } catch (error) {
-  //     Notification({
-  //       title: "Something went wrong",
-  //       type: "error",
-  //     })
-  //     console.log(error);
-  //   }
-  // }
+  updateData: async (data: any) => {
+    try {
+      const response = await user.update_user(data)
+      if (response.status === 200) {
+        Notification({
+          title: "User successfully updated",
+          type: "success",
+        });
+      }
+    } catch (error) {
+      Notification({
+        title: "Something went wrong",
+        type: "error",
+      })
+      console.log(error);
+    }
+  }
 }));
 
 export default useUsersStore;

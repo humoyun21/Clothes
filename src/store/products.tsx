@@ -10,7 +10,6 @@ const useProductsStore = create<ProductsStore>((set) => ({
     try {
       set({ isLoading: true });
       const response = await product.get_products(params);
-      console.log(response);
       if (response.status === 200) {
         response?.data?.products?.forEach((item: any, index: number) => {
           item.index = index + 1;
@@ -18,6 +17,7 @@ const useProductsStore = create<ProductsStore>((set) => ({
         set({ data: response?.data?.products });
       }
       set({ isLoading: false });
+      return response;
     } catch (error) {
       console.log(error);
     }

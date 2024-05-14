@@ -5,10 +5,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { userValidationSchema } from '@validation';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { FormControlLabel, FormLabel, IconButton, InputAdornment, Radio, RadioGroup, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createUser } from '../../../interface/user';
-import Radio from '../../ui/gender'
 import useUsersStore from '../../../store/users';
 
 const style = {
@@ -43,9 +42,9 @@ export default function BasicModal() {
     gender: "",
   };
   const handleSubmit = async (data:any) => {
-    createData(data)
+    await createData(data)
     handleClose()
-    getData(params)
+    await getData(params)
   }
 
   return (
@@ -122,7 +121,7 @@ export default function BasicModal() {
                   variant="outlined"
                   helperText={
                     <ErrorMessage
-                      name="email"
+                      name="first_name"
                       component="span"
                       className="text-[red] text-[15px]"
                     />
@@ -144,7 +143,33 @@ export default function BasicModal() {
                     />
                   }
                 />
-                <Radio />
+                <Field
+                    as={RadioGroup}
+                    aria-label="gender"
+                    name="gender"
+                    className="flex items-center mb-3"
+                  >
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Gender
+                    </FormLabel>
+                    <div className="flex items-center justify-between">
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                      />
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio />}
+                        label="Female"
+                      />
+                    </div>
+                  </Field>
+                  <ErrorMessage
+                    name="gender"
+                    component="p"
+                    className="mb-3 text-red-500 text-center"
+                  />
                 <Button
                   type="submit"
                   variant="contained"

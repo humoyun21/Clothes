@@ -27,7 +27,7 @@ const index = () => {
   return (
     <>
       
-      <div className="py-3 flex justify-between items-center">
+      <div className=" items-center flex  py-3 justify-between">
         <div className="w-96">
           <Paper
             component="form"

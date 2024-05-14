@@ -10,15 +10,17 @@ import {
 } from "@mui/material";
 import { Skeleton } from "@mui/material";
 import { TableProps } from "@global-interface";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import DeleteModal from "../modals/user-delete";
 import { UserUpdate } from "../modals";
 import edit from "../../assets/edit-icon.svg";
+import MediaUpload from '../ui/media-upload'
+import ProductCard from '../ui/product-card'
 
 const GlobalTable = ({ headers, body, isLoading, action, editItem }: TableProps) => {
+  
   return (
     <>
-      
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
@@ -57,11 +59,10 @@ const GlobalTable = ({ headers, body, isLoading, action, editItem }: TableProps)
                         ))}
                         {action?.map((item, i) => (
                           <TableCell key={i}>
-                            <div className="flex gap-2">
+                            <div className="flex gap-4 items-center">
                               {item.action == "show" ? (
-                                <button className="px-[6px] py-[7px] border border-gray-300 active:bg-gray-300 duration-150 bg-gray-200 rounded-md">
-                                  <VisibilityIcon />
-                                </button>
+                                
+                                <ProductCard data={items}/>
                               ) : items.id ? (
                                 <UserUpdate data={items} />
                               ) : (
@@ -73,9 +74,8 @@ const GlobalTable = ({ headers, body, isLoading, action, editItem }: TableProps)
                                 />
                               )}
                               {item.action2 == "image" ? (
-                                <button className="px-[6px] py-[7px] font-medium text-[14px] border border-gray-300 active:bg-gray-300 duration-150 bg-gray-200 rounded-md">
-                                  Set image
-                                </button>
+                                <MediaUpload data={items.product_id} />
+                                
                               ) : (
                                 <DeleteModal data={items} />
                               )}

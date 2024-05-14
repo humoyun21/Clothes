@@ -15,6 +15,10 @@ import routes from '../../router/router';
 const drawerWidth = 240;
 
 interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * Remove this when copying and pasting into your project.
+   */
   window?: () => Window;
 }
 
@@ -44,7 +48,7 @@ export default function ResponsiveDrawer(props: Props) {
       <Divider />
       <List>
         {routes?.map((item, index) => (
-          <NavLink to={item.path} key={index} className={item.path === pathname ? "block bg-blue-500 text-white" : ""}>
+          <NavLink to={item.path} key={index} className={item.path === pathname ? "block bg-blue text-white" : ""}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -59,6 +63,8 @@ export default function ResponsiveDrawer(props: Props) {
       <Divider />
     </div>
   );
+
+  // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
@@ -69,7 +75,7 @@ export default function ResponsiveDrawer(props: Props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
@@ -77,7 +83,7 @@ export default function ResponsiveDrawer(props: Props) {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true,
+            keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
