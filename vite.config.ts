@@ -15,7 +15,6 @@ export default defineConfig({
       { find: '@notification', replacement: '/src/utils/notification.ts' },
       { find: '@service', replacement: '/src/service' },
       { find: '@table', replacement: '/src/components/ui/table.tsx' },
-   
     ]
   }
 })

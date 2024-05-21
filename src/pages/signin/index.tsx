@@ -1,19 +1,20 @@
-import { auth } from "@service";
-import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { TextField, IconButton, InputAdornment, Button } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { signInValidationSchema } from "@validation";
 import { Signin } from "@auth-interface";
-import { TextField, IconButton, InputAdornment, Button } from "@mui/material";
+// import { SignInModal } from "../../components/modals";
+import { auth } from "@service";
 import { useNavigate } from "react-router-dom";
 import Notification from "@notification";
-import {  setDataToCookie } from "@data-service";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState, useEffect } from "react";
+import { getDataFromCookie, setDataToCookie } from "@data-service";
 import "./style.scss";
 
 const index = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  // const [modal, setModal] = useState(false);
   const initialValues: Signin = {
     email: "",
     password: "",
@@ -30,23 +31,43 @@ const index = () => {
           title: "Successfully login",
           type: "success",
         });
+      } 
+    } catch (error:any) {
+      if (error.response.status === 400) {
+        Notification({
+          title: error?.response?.data?.message,
+          type: "error",
+        });
+      } else if (error.response.status === 404) {
+        Notification({
+          title: "Email not found",
+          type: "error",
+        });
       }
-    } catch (error) {
-      console.log(error);
-      Notification({
-        title: "Wrong email or password",
-        type: "error" 
-      });
+      console.error(error);
     }
   };
- 
+  const login = () => {
+    if (getDataFromCookie("token")) {
+      navigate("/admin-panel");
+    }
+  };
+  useEffect(() => {
+    login();
+  }, []);
   return (
     <>
-      <div className="sigin-wrap h-screen flex-col flex items-center justify-center gap-8 p-5">
+      {/* <SignInModal
+        open={modal}
+        handleClose={() => {
+          false;
+        }}
+      /> */}
+      <div className="h-screen flex-col flex items-center justify-center gap-8 p-5">
         <h1 className="text-[35px] font-bold sm:text-[40px] md:text-[50px]">
           Login
         </h1>
-        <div className="max-w-[600px] border-grey">
+        <div className="max-w-[600px]">
           <Formik
             initialValues={initialValues}
             validationSchema={signInValidationSchema}
@@ -71,7 +92,6 @@ const index = () => {
                   }
                 />
                 <Field
-             
                   name="password"
                   type={showPassword ? "text" : "password"}
                   as={TextField}

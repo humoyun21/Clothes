@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import LogoutModal from '../modals/log-out'
+import LogoutModal from '../modals/logout'
 
 const drawerWidth = 240;
 interface ModalProps {

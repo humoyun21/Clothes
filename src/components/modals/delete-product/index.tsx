@@ -1,48 +1,44 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import del from "../../../assets/delete-icon.svg";
-import useUsersStore from "../../../store/users";
-import useCategoryStore from "../../../store/category";
+import { Button } from "@mui/material";
+import useProductsStore from "../../../store/products";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
-  borderRadius: 1.3,
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #fff",
+  borderRadius: 1.3,
   boxShadow: 24,
-  p: 3,
-  outline: "none",
+  p: 4,
 };
 
-export default function BasicModal({ data }: any) {
-  const { deleteData } = useUsersStore();
-  const { deleteCategory } = useCategoryStore();
+export default function BasicModal({data}:any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const deleteUser = () => {
-    if (data.id) {
-      deleteData(data.id);
-    } else if (data.category_id) {
-      deleteCategory(data.category_id);
+  const navigate = useNavigate();
+  const { deleteProduct } = useProductsStore();
+  const handleDelete = async () => {
+    const response = await deleteProduct(data);
+    if (response.status === 200) {
+        navigate("/admin-panel");
+        handleClose()
     }
-    handleClose();
-  };
+  }
+
   return (
     <div>
-      <img
-        className="border border-gray-300 py-[9px] px-[10px] rounded-md active:bg-gray-300 duration-150 bg-gray-200 cursor-pointer"
-        src={del}
-        onClick={handleOpen}
-        alt="delate"
-      />
+      <button className=" text-gray-500" onClick={handleOpen}>
+        <DeleteIcon />
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -52,12 +48,12 @@ export default function BasicModal({ data }: any) {
         <Box sx={style}>
           <div className="flex justify-between">
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {data.id? "Delete User?" : "Delete Category?"}
+              Delete Product?
             </Typography>
             <div className="flex gap-3 mt-16">
-              <Button onClick={handleClose}>Yo'q</Button>
-              <Button onClick={deleteUser} variant="contained">
-                Ha
+              <Button onClick={handleClose}>No</Button>
+              <Button onClick={handleDelete} variant="contained">
+                Yes
               </Button>
             </div>
           </div>

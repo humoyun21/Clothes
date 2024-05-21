@@ -5,4 +5,5 @@ import Products from './products'
 import Product from './product'
 import Categories from './categories'
 import Users from './users'
-export {Home, SignIn, SignUp, Products, Categories, Users, Product}
+import Upload from "./upload"
+export { Home, SignIn, SignUp, Products, Categories, Users, Product, Upload }

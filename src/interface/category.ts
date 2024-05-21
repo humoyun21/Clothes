@@ -16,6 +16,7 @@ export interface Request {
 export interface CategoryStore {
     data: any[];
     isLoading: boolean;
+    totalCount: number;
     getCategory: (data: GetCategory) => Promise<any>;
     deleteCategory: (id: number) => Promise<any>;
     createCategory: (data: CreateCategory) => Promise<any>;

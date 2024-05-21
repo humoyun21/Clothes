@@ -19,10 +19,15 @@ export interface createProduct {
 export interface ProductsStore {
   data: any[];
   isLoading: boolean;
+  totalCount: number;
   getData: (params: GetProduct) => Promise<any>;
   createProduct: (data: createProduct) => Promise<any>;
+  getProduct: (id: string | undefined) => any;
+  deleteProduct: (id: string | undefined) => any;
 }
 export interface Request {
   get_products: (data: GetProduct) => any;
   create_product: (data: createProduct) => any;
+  get_product: (id: string | undefined) => any;
+  delete_product: (id: string | undefined) => any;
 }

@@ -21,3 +21,9 @@ export interface TableProps {
     action?: any[]
     editItem?: any,
 }
+
+export interface PaginationProps {
+    totalCount: number,
+    page: number,
+    setParams: (value:number) => void,
+}

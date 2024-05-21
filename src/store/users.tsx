@@ -18,21 +18,26 @@ const useUsersStore = create<UsersStore>((set) => ({
       }
       set({ isLoading: false });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   createData: async (data: any) => {
     try {
       const response = await user.create_user(data);
       if (response.status === 201) {
-        set((state) => ({ data: [...state.data, response.data] }));
         Notification({
           title: "User successfully created",
           type: "success",
         });
+        set((state) => ({ data: [...state.data, response.data] }));
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      const message = error?.response?.data?.message;
+      Notification({
+        title: `${message}`,
+        type: "error",
+      })
+      console.error(error);
     }
   },
   deleteData: async (id: any) => {
@@ -50,7 +55,7 @@ const useUsersStore = create<UsersStore>((set) => ({
         title: "Something went wrong",
         type: "error",
       })
-      console.log(error);
+      console.error(error);
     }
   },
   updateData: async (data: any) => {
@@ -67,7 +72,7 @@ const useUsersStore = create<UsersStore>((set) => ({
         title: "Something went wrong",
         type: "error",
       })
-      console.log(error);
+      console.error(error);
     }
   }
 }));

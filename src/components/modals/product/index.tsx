@@ -9,7 +9,6 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
 } from "@mui/material";
 import { createProduct } from "../../../interface/products";
@@ -143,56 +142,52 @@ export default function BasicModal() {
                       />
                     }
                   />
-                  <div>
-                    <FormLabel id="demo-row-radio-buttons-group-label">
-                      Made in
-                    </FormLabel>
-                    <Field
-                      name="made_in"
-                      type="text"
-                      fullWidth
-                      as={Select}
-                      label="Made in"
-                      margin="none"
-                      variant="outlined"
-                    >
-                      <MenuItem value="Uzbekistan">Uzbekistan</MenuItem>
-                      <MenuItem value="Turkey">Turkey</MenuItem>
-                      <MenuItem value="China">China</MenuItem>
-                    </Field>
-                    <ErrorMessage
-                      name="made_in"
-                      component="span"
-                      className="text-[red] text-[15px]"
-                    />
-                  </div>
-                  <div>
-                    <FormLabel id="demo-row-radio-buttons-group-label">
-                      Gender
-                    </FormLabel>
-                    <Field
-                      name="category_id"
-                      type="text"
-                      as={Select}
-                      label="Category"
-                      className="relative"
-                      margin="none"
-                      variant="outlined"
-                      fullWidth
-                    >
-                      <MenuItem value="">Select category</MenuItem>
-                      {data?.map((item: any, index: number) => (
-                        <MenuItem key={index} value={item.category_id}>
-                          {item.category_name}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                    <ErrorMessage
-                      name="category_id"
-                      component="span"
-                      className="text-[red] text-[15px]"
-                    />
-                  </div>
+                  <Field
+                    name="made_in"
+                    type="text"
+                    fullWidth
+                    as={TextField}
+                    label="Made in"
+                    select
+                    margin="none"
+                    variant="outlined"
+                    helperText={
+                      <ErrorMessage
+                        name="made_in"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
+                  >
+                    <MenuItem value="Uzbekistan">Uzbekistan</MenuItem>
+                    <MenuItem value="Turkey">Turkey</MenuItem>
+                    <MenuItem value="China">China</MenuItem>
+                  </Field>
+                  <Field
+                    name="category_id"
+                    type="text"
+                    as={TextField}
+                    label="Category"
+                    select
+                    className="relative"
+                    margin="none"
+                    variant="outlined"
+                    fullWidth
+                    helperText={
+                      <ErrorMessage
+                        name="category_id"
+                        component="span"
+                        className="text-[red] text-[15px]"
+                      />
+                    }
+                  >
+                    <MenuItem value="">Select category</MenuItem>
+                    {data?.map((item: any, index: number) => (
+                      <MenuItem key={index} value={item.category_id}>
+                        {item.category_name}
+                      </MenuItem>
+                    ))}
+                  </Field>
                   <Field
                     name="cost"
                     type="number"

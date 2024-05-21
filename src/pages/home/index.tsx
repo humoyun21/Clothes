@@ -1,8 +1,7 @@
-
-import Layout from '../../components/ui/layout'
-import { getDataFromCookie } from "@data-service";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Layout from '../../components/ui/layout'
+import { getDataFromCookie } from "@data-service";
 import "./style.scss"
 const index = () => {
     const navigate = useNavigate();

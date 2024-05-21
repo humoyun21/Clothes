@@ -1,10 +1,9 @@
-import { IconButton, InputBase, Paper } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import Table from "@table";
 import useUsersStore from "../../store/users";
 import { User } from "../../components/modals";
-
+import { IconButton, InputBase, Paper } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 const index = () => {
   const { getData, data, isLoading } = useUsersStore();
   const [params] = useState({
@@ -21,13 +20,14 @@ const index = () => {
   const action = [
     {action: "edit", action2: "del" },
   ]
+  
   useEffect(() => {
     getData(params);
   }, [params]);
   return (
     <>
       
-      <div className=" items-center flex  py-3 justify-between">
+      <div className="py-3 flex justify-between items-center">
         <div className="w-96">
           <Paper
             component="form"

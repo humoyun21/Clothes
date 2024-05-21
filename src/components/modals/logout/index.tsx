@@ -48,13 +48,13 @@ export default function BasicModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className="flex justify-between w-auto">
-            <Typography id="modal-modal-title" variant="h6" component="h4">
-             Profildan chiqishni hoxlaysizmi
+          <div className="flex justify-between">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Do you want to exit?
             </Typography>
             <div className="flex gap-3 mt-16">
-              <Button onClick={handleClose}>yo'q</Button>
-              <Button onClick={logOut} variant="contained">Ha</Button>
+              <Button onClick={handleClose}>No</Button>
+              <Button onClick={logOut} variant="contained">Yes</Button>
             </div>
           </div>
         </Box>

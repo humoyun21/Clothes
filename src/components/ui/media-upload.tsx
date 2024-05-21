@@ -3,12 +3,14 @@ import axios from "axios";
 import { getDataFromCookie } from "@data-service";
 import Notification from "@notification";
 
+import { ImageUpdate } from "@modals";
+
 export default function InputFileUpload({ data }: any) {
   const [image, setImage] = React.useState({});
   const handleImageChange = (event: any) => {
     setImage(event.target.files[0]);
   };
-  const uploadImage = async (e:any) => {
+  const uploadImage = async (e: any) => {
     e.preventDefault();
     const formData: any = new FormData();
     formData.append("file", image);
@@ -38,14 +40,9 @@ export default function InputFileUpload({ data }: any) {
   };
   return (
     <>
-      <form className="flex flex-col gap-y-1" onSubmit={uploadImage}>
-        <input type="file" required onChange={handleImageChange} />
-        <button
-          className="bg-[#1976D2] text-white font-self-bold py-2 px-4 rounded duration-150 active:bg-[#1976d2bc]"
-        >
-          Upload image
-        </button>
-      </form>
+      <button className="px-[6px] py-[7px] border border-gray-300 active:bg-gray-300 duration-150 bg-gray-200 rounded-md">
+        <ImageUpdate change={handleImageChange} upload={uploadImage} />
+      </button>
     </>
   );
 }

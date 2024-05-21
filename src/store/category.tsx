@@ -6,15 +6,20 @@ import Notification from "@notification";
 const useCategoryStore = create<CategoryStore>((set) => ({
   data: [],
   isLoading: false,
+  totalCount: 1,
   getCategory: async (params: any) => {
     try {
       set({ isLoading: true });
       const response = await category.get_category(params);
+      console.log(response);
       if (response.status === 200) {
         response?.data?.categories?.forEach((item: any, index: number) => {
           item.index = index + 1;
         });
-        set({ data: response?.data?.categories });
+        set({
+          totalCount: Math.ceil(response.data.total_count / params.limit),
+          data: response?.data?.categories,
+        });
       }
       set({ isLoading: false });
       return response?.data?.categories;
@@ -51,7 +56,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         });
         set((state) => ({
           data: state.data.map((item: any) =>
-            item.category_id === data.category_id? data : item
+            item.category_id === data.category_id ? data : item
           ),
         }));
         Notification({
@@ -75,7 +80,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
           data: state.data.filter((item: any) => item.category_id !== id),
         }));
         Notification({
-          title: "User successfully deleted",
+          title: "Category successfully deleted",
           type: "success",
         });
       }
