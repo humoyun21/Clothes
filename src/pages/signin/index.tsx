@@ -63,7 +63,7 @@ const index = () => {
           false;
         }}
       /> */}
-      <div className="h-screen flex-col flex items-center justify-center gap-8 p-5">
+      <div className=" sigin-wrap h-screen flex-col flex items-center justify-center gap-8 p-5">
         <h1 className="text-[35px] font-bold sm:text-[40px] md:text-[50px]">
           Login
         </h1>
