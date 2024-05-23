@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import ImageGallery from "react-image-gallery";
 
 // import request from "../../service/config";
 import useProductStore from "../../store/products";
@@ -9,6 +10,7 @@ import DeleteModal from "../../components/modals/delete-product";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.scss";
 import { Button } from "@mui/material";
+import "react-image-gallery/styles/css/image-gallery.css"
 function index() {
   const { getProduct } = useProductStore();
   const { getMedia } = useMediaStore();
@@ -30,8 +32,7 @@ function index() {
   const getImg = async (id: any) => {
     try {
       const response: any = await getMedia(id);
-      console.log(response);
-      setImg(response?.images.map((item: any) => item.image_url));
+      setImg(response?.images?.map((item: any) => item.image_url));
     } catch (err) {
       console.error(err);
     }
@@ -42,15 +43,19 @@ function index() {
     response();
   }, []);
 
+  const images = img?.map((item: any) => {
+    return {
+      original: item,
+      thumbnail: item,
+    };
+  })
   return (
     <>
       <Button variant="contained" onClick={() => navigate("/admin-panel")}>
         <ArrowBackIcon />
       </Button>
+      {img && <ImageGallery items={images} />}
       <div className="flex justify-center mt-[170px] items-center gap-6">
-        <div className="w-[300px] ">
-          {img && <img src={img[0]} alt={product?.description} />}
-        </div>
         <div className="card flex flex-col items-start">
           <h2 className="text-[24px] text-slate-900 py-2 mb-4">
             {product?.product_name}

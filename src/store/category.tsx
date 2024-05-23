@@ -11,7 +11,6 @@ const useCategoryStore = create<CategoryStore>((set) => ({
     try {
       set({ isLoading: true });
       const response = await category.get_category(params);
-      console.log(response);
       if (response.status === 200) {
         response?.data?.categories?.forEach((item: any, index: number) => {
           item.index = index + 1;
